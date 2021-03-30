@@ -28,8 +28,10 @@ public class UsingMultipleDispatch {
 	  throws NoSuchMethodException {
 		try {
 			return type.getMethod(name, argsType);
-		} catch (NoSuchMethodException e) {
+		} catch (NoSuchMethodException e) { // fazer todas as permutaçoes possiveis e escolher a que tem super class
 			List<Class> argsTypesSuperClasses = new ArrayList<>();
+
+			// System.out.println(e.getCause());
 
 			for (Class argType : argsType) {
 				if (argType == Object.class) {

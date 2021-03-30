@@ -10,7 +10,7 @@ public class Printer extends Device {
 	public void draw(Circle c, Crayon r) {
 		System.err.println("drawing a circle on printer with crayon!");
 	}
-
+	
 	public void draw(Shape s) {
 		System.err.println("draw what on printer?");
 	}
