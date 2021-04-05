@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.lang.reflect.TypeVariable;
 import java.lang.reflect.InvocationTargetException;
 
 public class UsingMultipleDispatch {
@@ -17,6 +19,51 @@ public class UsingMultipleDispatch {
 				argsClasses.add(arg.getClass());
 			}
 
+			List<Method> availableMethods = new ArrayList<Method>();
+
+			for (Method m : receiver.getClass().getMethods()) { // getMethods
+				if (name.equals(m.getName()) && m.getParameters().length == args.length) {
+					availableMethods.add(m);
+					/*System.out.println("<Method>");
+					System.out.println("  " + m);
+					System.out.println("    <Parameter>");
+					for (Parameter p : m.getParameters()) {
+						System.out.println("      " + p.getType());
+					}
+					System.out.println("    </Parameter>");
+					System.out.println("</Method>");*/
+				}
+			}
+
+			Class[] argsType = argsClasses.toArray(new Class[argsClasses.size()]);
+			for (Class a : argsType) {
+				System.out.println(a);
+			}
+
+			// Choose the best
+			int min = 10000;
+			int counter = 0, i = 0;
+			Class argType;
+			for (Method m : availableMethods) {
+				counter = 0;
+				List<Parameter> parameters = new ArrayList<Parameter>();
+				i = 0;
+				for (Parameter p : m.getParameters()) {
+					argType = argsType[i++];
+					System.out.println("A: " + argType.getClass());
+					System.out.println("P: " + p.getClass());
+					while (argType != Object.class && argType != p.getClass()) {
+						counter += 1;
+						argType = argType.getSuperclass();
+					}
+					if (argType != p.getClass()) {
+						System.out.println("Args diff");
+					} else {
+						System.out.println("Args Match");
+					}
+				}
+			}
+			
 			Method method = bestMethod(receiver.getClass(),	name, argsClasses.toArray(new Class[argsClasses.size()]));
 			return method.invoke(receiver, args);
 		} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
@@ -31,7 +78,7 @@ public class UsingMultipleDispatch {
 		} catch (NoSuchMethodException e) { // fazer todas as permutaçoes possiveis e escolher a que tem super class
 			List<Class> argsTypesSuperClasses = new ArrayList<>();
 
-			// System.out.println(e.getCause());
+			// System.out.println(argsType.getDeclaredFields());
 
 			for (Class argType : argsType) {
 				if (argType == Object.class) {

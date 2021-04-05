@@ -19,9 +19,9 @@ mvn compile
 ```
 
 ## To Clean Project
-
+```
 mvn clean
-
+```
 
 ## LINKS
 
