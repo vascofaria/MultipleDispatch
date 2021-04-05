@@ -11,7 +11,7 @@ import java.lang.ClassNotFoundException;
 public class App {
 	public static void main(String[] args) {
 		printer();
-		reflection();
+		//reflection();
 	}
 
 	public static void printer() {
