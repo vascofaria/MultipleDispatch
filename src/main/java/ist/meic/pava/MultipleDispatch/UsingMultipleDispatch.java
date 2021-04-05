@@ -40,30 +40,6 @@ public class UsingMultipleDispatch {
 				System.out.println(a);
 			}
 
-			// Choose the best
-			int min = 10000;
-			int counter = 0, i = 0;
-			Class argType;
-			for (Method m : availableMethods) {
-				counter = 0;
-				List<Parameter> parameters = new ArrayList<Parameter>();
-				i = 0;
-				for (Parameter p : m.getParameters()) {
-					argType = argsType[i++];
-					System.out.println("A: " + argType.getClass());
-					System.out.println("P: " + p.getClass());
-					while (argType != Object.class && argType != p.getClass()) {
-						counter += 1;
-						argType = argType.getSuperclass();
-					}
-					if (argType != p.getClass()) {
-						System.out.println("Args diff");
-					} else {
-						System.out.println("Args Match");
-					}
-				}
-			}
-			
 			Method method = bestMethod(receiver.getClass(),	name, argsClasses.toArray(new Class[argsClasses.size()]));
 			return method.invoke(receiver, args);
 		} catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
