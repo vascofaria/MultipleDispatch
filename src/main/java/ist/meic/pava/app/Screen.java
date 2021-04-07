@@ -17,6 +17,15 @@ public class Screen extends Device {
 		System.err.println("drawing a circle on screen with pencil!");
 	}
 
+	/*
+	public void draw(Circle c, Crayon r, Shape c, Brush r) { // 2 SubClasses - 2 SuperClasses
+		System.err.println("drawing a circle on screen with crayon!");
+	}
+	public void draw(Circle c, Brush r, Circle c, Crayon r) { // 3 SubClasses - 1 SuperClass
+		System.err.println("drawing a circle on screen with crayon!");
+	}
+	*/
+
 	public void draw(Shape s) {
 		System.err.println("draw what on screen?");
 	}
